@@ -174,13 +174,13 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/edit/main/greedy-heuristics/plots/)
 
 <div>
-	<img src="./plots/TSPA.png" height="750"/>
-	<img src="./plots/TSPB.png" height="750"/>
+	<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/TSPA.png" height="750"/>
+	<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/TSPB.png" height="750"/>
 </div>
 	
 <div>
-	<img src="./plots/TSPC.png" height="750"/>
-	<img src="./plots/TSPD.png" height="750"/>
+	<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/TSPC.png" height="750"/>
+	<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/TSPD.png" height="750"/>
 </div>
 
 
