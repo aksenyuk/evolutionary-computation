@@ -1,132 +1,140 @@
 # Report
 
+Team members:
+
+- Sofya Aksenyuk, 150284
+- Uladzimir Ivashka, 150281
+
 ## Problem Description
 
-Given a set of nodes, each characterized by their (x, y) coordinates in a plane and an associated cost, the challenge is to select exactly 50% of these nodes and form a Hamiltonian cycle. The goal is to minimize the sum of the total length of the path plus the total cost of the selected nodes. Distances between nodes are computed as Euclidean distances and rounded to the nearest integer. 
+Given a set of nodes, each characterized by their (x, y) coordinates in a plane and an associated cost, the challenge is to select exactly 50% of these nodes and form a Hamiltonian cycle. 
+
+The goal is to minimize the sum of the total length of the path plus the total cost of the selected nodes. 
+
+Distances between nodes are computed as Euclidean distances and rounded to the nearest integer. 
 
 ## Methodologies
 
 ### Random Solution 
-A straightforward method where a solution is formed by randomly selecting nodes until a Hamiltonian cycle is created.
+A straightforward method where a solution is formed by randomly selecting nodes until a Hamiltonian cycle is created
 
 ### Nearest Neighbor 
-This algorithm starts from an initial node and sequentially selects the nearest unvisited node until all nodes are included in the path.
+This algorithm starts from an initial node and sequentially selects the nearest unvisited node until all nodes are included in the path
 
 ### Greedy Cycle 
-This heuristic method initiates a cycle and iteratively selects a node to insert into the cycle, minimizing the increase in total distance at each step.
+This heuristic method initiates a cycle and iteratively selects a node to insert into the cycle, minimizing the increase in total distance at each step
+
+## Source code
+
+Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/greedy_heuristics.ipynb)
 
 ## Pseudocode
 
 ### 1. Random Search
 
-Function RANDOM_SEARCH(distance_matrix, current_node_index=None):
-    to_visit <- SET of all node indices
-    IF current_node_index is None:
-	current_node_index <- RANDOM choice from to_visit
-    ENDIF
-    
-    current_node <- current_node_index
-    solution <- LIST containing current_node
-    total_cost <- 0
-    
-    REMOVE current_node from to_visit
-    
-    WHILE to_visit is not empty:
-	next_node_index <- RANDOM choice from to_visit
-	ADD distance from current_node to next_node to total_cost
-	ADD next_node to solution
-	REMOVE next_node from to_visit
-	current_node <- next_node
-    ENDWHILE
-    
-    ADD distance from last node to first node to total_cost
-    ADD first node to solution
-    
-    RETURN solution, total_cost
-END Function
+	Function RANDOM_SEARCH(distance_matrix, current_node_index=None):
+	    to_visit <- SET of all node indices
+	    IF current_node_index is None:
+		current_node_index <- RANDOM choice from to_visit
+	    ENDIF
+	    
+	    current_node <- current_node_index
+	    solution <- LIST containing current_node
+	    total_cost <- 0
+	    
+	    REMOVE current_node from to_visit
+	    
+	    WHILE to_visit is not empty:
+		next_node_index <- RANDOM choice from to_visit
+		ADD distance from current_node to next_node to total_cost
+		ADD next_node to solution
+		REMOVE next_node from to_visit
+		current_node <- next_node
+	    ENDWHILE
+	    
+	    ADD distance from last node to first node to total_cost
+	    ADD first node to solution
+	    
+	    RETURN solution, total_cost
+	END Function
 
 
 ### Nearest Neighbor
 
-Function nearest_neighbor(distance_matrix: 2D Array of Integers, current_node_index: Optional Integer) -> Tuple(List of Integers, Integer):
-    If current_node_index is None:
-        current_node_index = random_element_from(set(range(size_of(distance_matrix))))
+	Function NEAREST_NEIGHBOR(distance_matrix, current_node_index=None):
+	    to_visit <- SET of all node indices
+	    IF current_node_index is None:
+	        current_node_index <- RANDOM choice from to_visit
+	    ENDIF
+	
+	    current_node <- current_node_index
+	    solution <- LIST containing current_node
+	    total_cost <- 0
+	
+	    REMOVE current_node from to_visit
+	
+	    WHILE to_visit is not empty:
+	        closest_neighbor <- MINIMUM distance neighbor from current_node in to_visit
+	        closest_neighbor_distance <- distance from current_node to closest_neighbor
+	
+	        ADD closest_neighbor_distance to total_cost
+	        ADD closest_neighbor to solution
+	        REMOVE closest_neighbor from to_visit
+	        current_node <- closest_neighbor
+	    ENDWHILE
+	
+	    ADD distance from last node to first node to total_cost
+	    ADD first node to solution
+	
+	    RETURN solution, total_cost
+	END Function
 
-    to_visit = set(range(size_of(distance_matrix)))
 
-    current_node = current_node_index
-    solution = [current_node]
-    total_cost = 0
-
-    to_visit.remove(current_node_index)
-
-    While to_visit is not empty:
-        closest_neighbor = None
-        closest_neighbor_distance = Infinity
-
-        For each neighbor in to_visit:
-            If distance_matrix[current_node][neighbor] < closest_neighbor_distance:
-                closest_neighbor_distance = distance_matrix[current_node][neighbor]
-                closest_neighbor = neighbor
-
-        total_cost += closest_neighbor_distance
-        solution.append(closest_neighbor)
-
-        to_visit.remove(closest_neighbor)
-
-        current_node = closest_neighbor
-
-    solution.append(solution[0])
-    total_cost += distance_matrix[solution[-2]][solution[0]]
-
-    Return (solution, total_cost)
-    
-    
 ### Greedy Cycle
 
-Function GREEDY_CYCLE(distance_matrix, current_node_index=None):
-Function greedy_cycle(distance_matrix: 2D Array of Integers, current_node_index: Optional Integer) -> Tuple(List of Integers, Integer):
-
-    to_visit = set(range(size_of(distance_matrix)))
-
-    If current_node_index is None:
-        current_node_index = random_element_from(set(range(size_of(distance_matrix))))
-
-    current_node = current_node_index
-    solution = [current_node]
-    total_cost = 0
-    
-    to_visit.remove(current_node_index)
-    
-    While to_visit is not empty:
-        closest_neighbor = None
-        closest_neighbor_distance = Infinity
-        closest_neighbor_position = None
-        
-        For neighbor in to_visit:
-            If size_of(solution) == 1:
-                neighbor_distance = distance_matrix[current_node][neighbor] + distance_matrix[neighbor][current_node]
-                candidate_position = 1
-            Else:
-                distances = [
-                    distance_matrix[solution[i-1]][neighbor] + distance_matrix[neighbor][solution[i]] - distance_matrix[solution[i-1]][solution[i]] 
-                    For i in range(1, size_of(solution))
-                ]
-                neighbor_distance, candidate_position = min([(dist, pos) For pos, dist in enumerate(distances, start=1)])
-            
-            If neighbor_distance < closest_neighbor_distance:
-                closest_neighbor = neighbor
-                closest_neighbor_distance = neighbor_distance
-                closest_neighbor_position = candidate_position
-        
-        total_cost += closest_neighbor_distance
-        solution.insert_at_position(closest_neighbor_position, closest_neighbor)
-        to_visit.remove(closest_neighbor)
-    
-    solution.append(solution[0])
-    total_cost += distance_matrix[solution[-2]][solution[0]]
-    
-    Return (solution, total_cost)
+	Function GREEDY_CYCLE(distance_matrix, current_node_index=None):
+	    to_visit <- SET of all node indices
+	    IF current_node_index is None:
+	        current_node_index <- RANDOM choice from to_visit
+	    ENDIF
+	
+	    current_node <- current_node_index
+	    solution <- LIST containing current_node
+	    total_cost <- 0
+	
+	    REMOVE current_node from to_visit
+	
+	    WHILE to_visit is not empty:
+	        closest_neighbor <- NULL
+	        closest_neighbor_distance <- INFINITY
+	        closest_neighbor_position <- NULL
+	
+	        FOR EACH neighbor IN to_visit:
+	            IF solution length is 1:
+	                neighbor_distance <- SUM of distances between current_node and neighbor and neighbor and current_node
+	                candidate_position <- 1
+	            ELSE:
+	                distances <- LIST of modified distances considering insertion between all nodes in solution
+	                neighbor_distance, candidate_position <- MINIMUM distance and corresponding position in distances
+	            ENDIF
+	
+	            IF neighbor_distance < closest_neighbor_distance:
+	                closest_neighbor <- neighbor
+	                closest_neighbor_distance <- neighbor_distance
+	                closest_neighbor_position <- candidate_position
+	            ENDIF
+	        ENDFOR
+	
+	        ADD closest_neighbor_distance to total_cost
+	        INSERT closest_neighbor at closest_neighbor_position in solution
+	        REMOVE closest_neighbor from to_visit
+	    ENDWHILE
+	
+	    ADD distance from last node to first node to total_cost
+	    ADD first node to solution
+	
+	    RETURN solution, total_cost
+	END Function
 
 
 # Computational Experiments
@@ -161,14 +169,32 @@ Function greedy_cycle(distance_matrix: 2D Array of Integers, current_node_index:
 | nearest_neighbor  | 153543.0| 156398.39 | 159569.0|
 | greedy_cycle      | 130391.0| 131439.06 | 132972.0|
 
+## Best Solutions Plots
+
+See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/edit/main/greedy-heuristics/plots/)
+
+<div>
+	<img src="./plots/TSPA.png" height="750"/>
+	<img src="./plots/TSPB.png" height="750"/>
+</div>
+	
+<div>
+	<img src="./plots/TSPC.png" height="750"/>
+	<img src="./plots/TSPD.png" height="750"/>
+</div>
+
 
 # Conclusions
 
-	- Efficiency of Methods: The Greedy Cycle method persistently shows the smallest average and minimal total costs across all test cases, indicating a tendency to find more optimal solutions in comparison to the Random Search and Nearest Neighbor methods.
+### Performance
 
-    	- Reliability: The Nearest Neighbor and Greedy Cycle methods consistently perform better than the Random Search method, which, as anticipated, produces the highest costs due to its uninformed search strategy.
+- Greedy Cycle generally outperformed both Nearest Neighbor and Random Search in minimizing costs across all instances, demonstrating its superior heuristic
 
-    	- Variability: The Random Search method exhibits higher variability in costs across runs compared to other methods, reflecting its stochastic nature.
+- Nearest Neighbor also notably surpassed the random approach in delivering lower-cost solutions
 
-    	- Visualization: 2D visualizations of the solutions, which are crucial for understanding the spatial distribution and quality of solutions, have not been presented and should be developed to enhance the analysis and comparison of different methods and solutions.
+### Stability of Solutions
+
+- Random Search, though computationally light, yielded high variability and less optimal solutions
+
+- Both greedy methods, especially Greedy Cycle, produced more stable and reliable outcomes with lower variability in costs
 
