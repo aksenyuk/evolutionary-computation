@@ -1,10 +1,5 @@
 # Report
 
-Team members:
-
-- Sofya Aksenyuk, 150284
-- Uladzimir Ivashka, 150281
-
 ## Problem Description
 
 Given a set of nodes, each characterized by their (x, y) coordinates in a plane and an associated cost, the challenge is to select exactly 50% of these nodes and form a Hamiltonian cycle. 
