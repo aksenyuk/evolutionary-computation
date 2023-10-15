@@ -30,78 +30,85 @@ END Function
 
 # Nearest Neighbor
 
-Function NEAREST_NEIGHBOR(distance_matrix, current_node_index=None):
-    to_visit <- SET of all node indices
-    IF current_node_index is None:
-        current_node_index <- RANDOM choice from to_visit
-    ENDIF
-    
-    current_node <- current_node_index
-    solution <- LIST containing current_node
-    total_cost <- 0
-    
-    REMOVE current_node from to_visit
-    
-    WHILE to_visit is not empty:
-        closest_neighbor <- MINIMUM distance neighbor from current_node in to_visit
-        closest_neighbor_distance <- distance from current_node to closest_neighbor
-        
-        ADD closest_neighbor_distance to total_cost
-        ADD closest_neighbor to solution
-        REMOVE closest_neighbor from to_visit
-        current_node <- closest_neighbor
-    ENDWHILE
-    
-    ADD distance from last node to first node to total_cost
-    ADD first node to solution
-    
-    RETURN solution, total_cost
-END Function
+Function nearest_neighbor(distance_matrix: 2D Array of Integers, current_node_index: Optional Integer) -> Tuple(List of Integers, Integer):
+    If current_node_index is None:
+        current_node_index = random_element_from(set(range(size_of(distance_matrix))))
+
+    to_visit = set(range(size_of(distance_matrix)))
+
+    current_node = current_node_index
+    solution = [current_node]
+    total_cost = 0
+
+    to_visit.remove(current_node_index)
+
+    While to_visit is not empty:
+        closest_neighbor = None
+        closest_neighbor_distance = Infinity
+
+        For each neighbor in to_visit:
+            If distance_matrix[current_node][neighbor] < closest_neighbor_distance:
+                closest_neighbor_distance = distance_matrix[current_node][neighbor]
+                closest_neighbor = neighbor
+
+        total_cost += closest_neighbor_distance
+        solution.append(closest_neighbor)
+
+        to_visit.remove(closest_neighbor)
+
+        current_node = closest_neighbor
+
+    solution.append(solution[0])
+    total_cost += distance_matrix[solution[-2]][solution[0]]
+
+    Return (solution, total_cost)
+
 
 
 
 # Greedy Cycle
 
 Function GREEDY_CYCLE(distance_matrix, current_node_index=None):
-    to_visit <- SET of all node indices
-    IF current_node_index is None:
-        current_node_index <- RANDOM choice from to_visit
-    ENDIF
+Function greedy_cycle(distance_matrix: 2D Array of Integers, current_node_index: Optional Integer) -> Tuple(List of Integers, Integer):
+
+    to_visit = set(range(size_of(distance_matrix)))
+
+    If current_node_index is None:
+        current_node_index = random_element_from(set(range(size_of(distance_matrix))))
+
+    current_node = current_node_index
+    solution = [current_node]
+    total_cost = 0
     
-    current_node <- current_node_index
-    solution <- LIST containing current_node
-    total_cost <- 0
+    to_visit.remove(current_node_index)
     
-    REMOVE current_node from to_visit
-    
-    WHILE to_visit is not empty:
-        closest_neighbor <- NULL
-        closest_neighbor_distance <- INFINITY
-        closest_neighbor_position <- NULL
+    While to_visit is not empty:
+        closest_neighbor = None
+        closest_neighbor_distance = Infinity
+        closest_neighbor_position = None
         
-        FOR EACH neighbor IN to_visit:
-            IF solution length is 1:
-                neighbor_distance <- SUM of distances between current_node and neighbor and neighbor and current_node
-                candidate_position <- 1
-            ELSE:
-                distances <- LIST of modified distances considering insertion between all nodes in solution
-                neighbor_distance, candidate_position <- MINIMUM distance and corresponding position in distances
-            ENDIF
+        For neighbor in to_visit:
+            If size_of(solution) == 1:
+                neighbor_distance = distance_matrix[current_node][neighbor] + distance_matrix[neighbor][current_node]
+                candidate_position = 1
+            Else:
+                distances = [
+                    distance_matrix[solution[i-1]][neighbor] + distance_matrix[neighbor][solution[i]] - distance_matrix[solution[i-1]][solution[i]] 
+                    For i in range(1, size_of(solution))
+                ]
+                neighbor_distance, candidate_position = min([(dist, pos) For pos, dist in enumerate(distances, start=1)])
             
-            IF neighbor_distance < closest_neighbor_distance:
-                closest_neighbor <- neighbor
-                closest_neighbor_distance <- neighbor_distance
-                closest_neighbor_position <- candidate_position
-            ENDIF
-        ENDFOR
+            If neighbor_distance < closest_neighbor_distance:
+                closest_neighbor = neighbor
+                closest_neighbor_distance = neighbor_distance
+                closest_neighbor_position = candidate_position
         
-        ADD closest_neighbor_distance to total_cost
-        INSERT closest_neighbor at closest_neighbor_position in solution
-        REMOVE closest_neighbor from to_visit
-    ENDWHILE
+        total_cost += closest_neighbor_distance
+        solution.insert_at_position(closest_neighbor_position, closest_neighbor)
+        to_visit.remove(closest_neighbor)
     
-    ADD distance from last node to first node to total_cost
-    ADD first node to solution
+    solution.append(solution[0])
+    total_cost += distance_matrix[solution[-2]][solution[0]]
     
-    RETURN solution, total_cost
-END Function
+    Return (solution, total_cost)
+
