@@ -141,33 +141,7 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
 ## Results
 
-### TSPA
-| Algorithm         | Min     | Avg       | Max     |
-|-------------------|---------|-----------|---------|
-| random_search     | 504381.0| 530265.29 | 566168.0|
-| nearest_neighbor  | 266571.0| 268736.18 | 270825.0|
-| greedy_cycle      | 233906.0| 235950.42 | 238314.0|
-
-### TSPB
-| Algorithm         | Min     | Avg       | Max     |
-|-------------------|---------|-----------|---------|
-| random_search     | 498947.0| 531610.39 | 560287.0|
-| nearest_neighbor  | 260275.0| 263994.80 | 266447.0|
-| greedy_cycle      | 226482.0| 228284.68 | 230288.0|
-
-### TSPC
-| Algorithm         | Min     | Avg       | Max     |
-|-------------------|---------|-----------|---------|
-| random_search     | 393988.0| 428608.69 | 456807.0|
-| nearest_neighbor  | 156765.0| 159934.69 | 163734.0|
-| greedy_cycle      | 134596.0| 135505.10 | 136691.0|
-
-### TSPD
-| Algorithm         | Min     | Avg       | Max     |
-|-------------------|---------|-----------|---------|
-| random_search     | 405125.0| 436056.91 | 464179.0|
-| nearest_neighbor  | 153543.0| 156398.39 | 159569.0|
-| greedy_cycle      | 130391.0| 131439.06 | 132972.0|
+<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/tables.png"/>
 
 ## Best Solutions Plots
 
