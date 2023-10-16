@@ -141,7 +141,7 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
 ## Results
 
-<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/tables.png"/>
+<img src="https://github.com/aksenyuk/evolutionary-computation/blob/main/greedy-heuristics/plots/results.png"/>
 
 ## Best Solutions Plots
 
