@@ -73,3 +73,5 @@ app.log
 .idea
 .venv
 .ruff_cache
+
+*.exe
