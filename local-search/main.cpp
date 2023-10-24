@@ -55,13 +55,17 @@ double eucDistance(const Node &a, const Node &b) {
 
 
 
-std::vector<std::vector<double>> computeDistanceMatrix(const std::vector<Node> &nodes) {
+std::vector<std::vector<double>> computeDistanceMatrix(const std::vector<Node> &nodes, bool cost = false) {
     int n = nodes.size();
     std::vector<std::vector<double>> matrix(n, std::vector<double>(n));
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            matrix[i][j] = eucDistance(nodes[i], nodes[j]) + nodes[j].cost;
+            if (cost) {
+                matrix[i][j] = eucDistance(nodes[i], nodes[j]) + nodes[j].cost;
+            } else {
+                matrix[i][j] = eucDistance(nodes[i], nodes[j]);
+            }
         }
     }
     return matrix;
@@ -155,6 +159,12 @@ std::pair<std::vector<int>, double> randomSearch(
     int startIndex
 ) {
     int n = nodes.size();
+
+    if (startIndex == -1) {
+        std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+        startIndex = rng() % n;
+    }
+
     std::vector<int> path = {startIndex};
     std::vector<int> remainingNodes;
 
@@ -256,7 +266,7 @@ std::pair<std::vector<int>, double> greedyCycle(
 
 
 int main() {
-    std::vector<std::string> files = {"./data/TSPA.csv", "./data/TSPB.csv", "./data/TSPC.csv", "./data/TSPD.csv"};
+    std::vector<std::string> files = {"../data/TSPA.csv", "../data/TSPB.csv", "../data/TSPC.csv", "../data/TSPD.csv"};
     std::vector<AlgoFunc> algorithms = {randomSearch, greedyCycle};
 
     std::vector<std::vector<Metrics>> allMetrics;
@@ -275,12 +285,12 @@ int main() {
             };
 
             auto nodes = readCSV(filename);
-            auto matrix = computeDistanceMatrix(nodes);
+            auto matrix_with_costs = computeDistanceMatrix(nodes);
 
             int runs = nodes.size();
             for (int i = 0; i < runs; ++i) {
                 auto start = std::chrono::high_resolution_clock::now();
-                auto [solution, cost] = algo(matrix, nodes, i);
+                auto [solution, cost] = algo(matrix_with_costs, nodes, -1);
                 auto end = std::chrono::high_resolution_clock::now();
 
                 std::chrono::duration<double> diff = end - start;
@@ -310,3 +320,4 @@ int main() {
 
     return 0;
 }
+
