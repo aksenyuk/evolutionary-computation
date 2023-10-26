@@ -7,6 +7,8 @@
 #include <chrono>
 #include <random>
 #include <set>
+#include <algorithm>
+#include <limits>
 
 
 
@@ -55,13 +57,13 @@ double eucDistance(const Node &a, const Node &b) {
 
 
 
-std::vector<std::vector<double>> computeDistanceMatrix(const std::vector<Node> &nodes, bool cost = false) {
+std::vector<std::vector<double>> computeDistanceMatrix(const std::vector<Node> &nodes, bool includeCost = false) {
     int n = nodes.size();
     std::vector<std::vector<double>> matrix(n, std::vector<double>(n));
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            if (cost) {
+            if (includeCost) {
                 matrix[i][j] = eucDistance(nodes[i], nodes[j]) + nodes[j].cost;
             } else {
                 matrix[i][j] = eucDistance(nodes[i], nodes[j]);
@@ -194,70 +196,72 @@ std::pair<std::vector<int>, double> randomSearch(
 
 
 
-std::pair<std::vector<int>, double> greedyCycle(
-    const std::vector<std::vector<double>> &matrix,
+
+std::pair<std::vector<int>, double> greedy2RegretWeighted(
+    const std::vector<std::vector<double>>& matrix,
     const std::vector<Node> &nodes,
     int current_node_index = -1
 ) {
-    int n = matrix.size();
-    
+    double regret_weight = 0.5;
+    int num_nodes = matrix.size();
+
+    std::vector<int> to_visit(num_nodes);
+    std::iota(to_visit.begin(), to_visit.end(), 0); 
+
     if (current_node_index == -1) {
         std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
-        current_node_index = rng() % n;
+        current_node_index = to_visit[rng() % num_nodes];
     }
 
-    std::vector<int> to_visit(n);
-    std::iota(to_visit.begin(), to_visit.end(), 0); 
-    to_visit.erase(std::remove(to_visit.begin(), to_visit.end(), current_node_index), to_visit.end());
-
-    std::sort(to_visit.begin(), to_visit.end(),
-        [&matrix, &current_node_index](int a, int b) {
-            return matrix[current_node_index][a] < matrix[current_node_index][b];
-        }
-    );
+    std::swap(to_visit[current_node_index], to_visit.back());
+    to_visit.pop_back();
 
     std::vector<int> solution = {current_node_index};
+    std::vector<std::pair<double, int>> insertion_costs;
 
-    while (solution.size() < n / 2) {
-        int closest_neighbor = -1;
-        double closest_neighbor_distance = std::numeric_limits<double>::max();
-        size_t closest_neighbor_position;
+    while (solution.size() != matrix.size() / 2) {
+        double max_weighted_sum = std::numeric_limits<double>::lowest();
+        int best_node = -1;
+        int best_insertion_point = -1;
 
-        for (const int &neighbor : to_visit) {
-            double neighbor_distance;
-            size_t candidate_position;
+        for (const int node : to_visit) {
+            insertion_costs.clear();
 
-            if (solution.size() == 1) {
-                neighbor_distance = matrix[current_node_index][neighbor] + matrix[neighbor][current_node_index];
-                candidate_position = 1;
-            } else {
-                double min_dist = std::numeric_limits<double>::max();
-                for (size_t i = 1; i < solution.size(); ++i) {
-                    double dist = matrix[solution[i-1]][neighbor] + matrix[neighbor][solution[i]] - matrix[solution[i-1]][solution[i]];
-                    if (dist < min_dist) {
-                        min_dist = dist;
-                        candidate_position = i;
-                    }
-                }
-                neighbor_distance = min_dist;
+            for (size_t i = 0; i < solution.size() - 1; ++i) {
+                double cost = matrix[solution[i]][node] + matrix[node][solution[i + 1]] - matrix[solution[i]][solution[i + 1]];
+                insertion_costs.emplace_back(cost, i);
             }
 
-            if (neighbor_distance < closest_neighbor_distance) {
-                closest_neighbor = neighbor;
-                closest_neighbor_distance = neighbor_distance;
-                closest_neighbor_position = candidate_position;
+            double last_insertion_cost = matrix[solution.back()][node] + matrix[node][solution[0]] - matrix[solution.back()][solution[0]];
+            insertion_costs.emplace_back(last_insertion_cost, solution.size() - 1);
+
+            std::sort(insertion_costs.begin(), insertion_costs.end());
+
+            double weighted_sum = 0;
+            if (insertion_costs.size() > 1) {
+                double regret = insertion_costs[1].first - insertion_costs[0].first;
+                double objectivee = -insertion_costs[0].first;
+                weighted_sum = regret_weight * regret + (1 - regret_weight) * objectivee;
+            }
+
+            if (weighted_sum > max_weighted_sum) {
+                max_weighted_sum = weighted_sum;
+                best_node = node;
+                best_insertion_point = insertion_costs[0].second;
             }
         }
 
-        solution.insert(solution.begin() + closest_neighbor_position, closest_neighbor);
-        to_visit.erase(std::remove(to_visit.begin(), to_visit.end(), closest_neighbor), to_visit.end());
+        solution.insert(solution.begin() + best_insertion_point + 1, best_node);
+
+        auto it = std::find(to_visit.begin(), to_visit.end(), best_node);
+        std::swap(*it, to_visit.back());
+        to_visit.pop_back();
     }
 
-    double total_cost = 0.0;
+    double total_cost = matrix[solution.back()][solution[0]];
     for (size_t i = 0; i < solution.size() - 1; ++i) {
-        total_cost += matrix[solution[i]][solution[i+1]];
+        total_cost += matrix[solution[i]][solution[i + 1]];
     }
-    total_cost += matrix[solution.back()][solution[0]];
 
     return {solution, total_cost};
 }
@@ -267,7 +271,7 @@ std::pair<std::vector<int>, double> greedyCycle(
 
 int main() {
     std::vector<std::string> files = {"../data/TSPA.csv", "../data/TSPB.csv", "../data/TSPC.csv", "../data/TSPD.csv"};
-    std::vector<AlgoFunc> algorithms = {randomSearch, greedyCycle};
+    std::vector<AlgoFunc> algorithms = {randomSearch, greedy2RegretWeighted};
 
     std::vector<std::vector<Metrics>> allMetrics;
 
@@ -285,12 +289,12 @@ int main() {
             };
 
             auto nodes = readCSV(filename);
-            auto matrix_with_costs = computeDistanceMatrix(nodes);
+            auto matrix_with_costs = computeDistanceMatrix(nodes, true);
 
             int runs = nodes.size();
             for (int i = 0; i < runs; ++i) {
                 auto start = std::chrono::high_resolution_clock::now();
-                auto [solution, cost] = algo(matrix_with_costs, nodes, -1);
+                auto [solution, cost] = algo(matrix_with_costs, nodes, i);
                 auto end = std::chrono::high_resolution_clock::now();
 
                 std::chrono::duration<double> diff = end - start;
@@ -315,7 +319,7 @@ int main() {
         allMetrics.push_back(algoMetrics);
     }
 
-    std::vector<std::string> algoNames = {"Random Search", "Greedy Cycle"};
+    std::vector<std::string> algoNames = {"Random Search", "Greedy 2-regret wighted"};
     writeMetricsToCSV(allMetrics, files, algoNames);
 
     return 0;
