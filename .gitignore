@@ -75,3 +75,5 @@ app.log
 .ruff_cache
 
 *.exe
+
+chache/

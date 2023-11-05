@@ -1,0 +1,53 @@
+Function GreedyLocalSearch(InitialSolution, DistanceMatrix, Costs):
+    CurrentSolution = InitialSolution
+    Improved = True
+    
+    While Improved:
+        NeighborsNodeSwap = (generate all possible inter/intra node swaps)
+        NeighborsEdgeSwap = (generate all possible inter/intra node swaps)
+        Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
+        Neighbors = Shuffle(Neighbors)
+        Improved = False
+        
+        For each Neighbor in Neighbors:
+            If (Neighbor is node swap):
+                Delta = CalculateNodeSwapDelta(CurrentSolution, DistanceMatrix, Costs)
+            If (Neighbor is edge swap):
+                Delta = CalculateEdgeSwapDelta(CurrentSolution, DistanceMatrix, Costs)
+            If Delta > 0:
+                CurrentSolution = Neighbor
+                Improved = True
+                Break
+                
+    Return CurrentSolution
+
+
+
+Function SteepestLocalSearch(InitialSolution, DistanceMatrix, Costs):
+    CurrentSolution = InitialSolution
+    Improved = True
+    
+    While Improved:
+        NeighborsNodeSwap = (generate all possible inter/intra node swaps)
+        NeighborsEdgeSwap = (generate all possible inter/intra node swaps)
+        Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
+        Improved = False
+        
+        BestNeighbor = CurrentSolution
+        BestDelta = 0
+        
+        For each Neighbor in Neighbors:
+            If (Neighbor is node swap):
+                Delta = CalculateNodeSwapDelta(CurrentSolution, DistanceMatrix, Costs)
+            If (Neighbor is edge swap):
+                Delta = CalculateEdgeSwapDelta(CurrentSolution, DistanceMatrix, Costs)
+            If Delta > BestDelta:
+                BestNeighbor = Neighbor
+                BestDelta = Delta
+        
+        If BestNeighbor != CurrentSolution:
+            CurrentSolution = BestNeighbor
+            Improved = True
+                
+    Return CurrentSolution
+
