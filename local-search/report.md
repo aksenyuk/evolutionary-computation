@@ -43,7 +43,7 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
         
         While Improved:
             NeighborsNodeSwap = (generate all possible inter/intra node swaps)
-            NeighborsEdgeSwap = (generate all possible inter/intra node swaps)
+            NeighborsEdgeSwap = (generate all possible inter/intra edges swaps)
             Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
             Neighbors = Shuffle(Neighbors)
             Improved = False
@@ -71,7 +71,7 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
         
         While Improved:
             NeighborsNodeSwap = (generate all possible inter/intra node swaps)
-            NeighborsEdgeSwap = (generate all possible inter/intra node swaps)
+            NeighborsEdgeSwap = (generate all possible inter/intra edges swaps)
             Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
             Improved = False
             
