@@ -1,5 +1,5 @@
-Function GreedyLocalSearch(InitialSolution, DistanceMatrix, Costs):
-    CurrentSolution = InitialSolution
+Function GreedyLocalSearch(DistanceMatrix, Costs):
+    CurrentSolution = (generate initial solution using RandomSearch/GreedyHeuristic)
     Improved = True
     
     While Improved:
@@ -23,8 +23,8 @@ Function GreedyLocalSearch(InitialSolution, DistanceMatrix, Costs):
 
 
 
-Function SteepestLocalSearch(InitialSolution, DistanceMatrix, Costs):
-    CurrentSolution = InitialSolution
+Function SteepestLocalSearch(DistanceMatrix, Costs):
+    CurrentSolution = (generate initial solution using RandomSearch/GreedyHeuristic)
     Improved = True
     
     While Improved:
