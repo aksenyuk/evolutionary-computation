@@ -29,7 +29,7 @@ It aims to find the absolute best move at each step.
 
 ## Source code
 
-Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/main/local-search/local-search.ipynb)
+Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/main/local-search/local-search-fixed.ipynb)
 
 <div style="page-break-after: always"></div>
 
@@ -113,35 +113,35 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Greedy-inter-GreedyHeuristic.png"/>
+<img src="plots/Greedy-edges-GreedyHeuristic_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Greedy-inter-Random.png"/>
+<img src="plots/Greedy-edges-Random_upd.png"/>
 	
 <div style="page-break-after: always"></div>
 
-<img src="plots/Greedy-intra-GreedyHeuristic.png"/>
+<img src="plots/Greedy-nodes-GreedyHeuristic_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Greedy-intra-Random.png"/>
+<img src="plots/Greedy-nodes-Random_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Steepest-inter-GreedyHeuristic.png"/>
+<img src="plots/Steepest-edges-GreedyHeuristic_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Steepest-inter-Random.png"/>
+<img src="plots/Steepest-edges-Random_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Steepest-intra-GreedyHeuristic TSPA.png"/>
+<img src="plots/Steepest-nodes-GreedyHeuristic_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/Steepest-intra-Random.png"/>
+<img src="plots/Steepest-nodes-Random_upd.png"/>
 
 <div style="page-break-after: always"></div>
 
@@ -151,17 +151,23 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 ### Cost
 
-When looking at the average cost, starting with a greedy heuristic tends to lead to better outcomes than starting with a random solution. This is consistent across all TSP instances. The range (min-max) for the greedy heuristic starting solutions is also generally tighter, indicating more consistent performance.
+When looking at the average cost, starting with a greedy heuristic tends to lead to better outcomes than starting with a random solution. This is consistent across all TSP instances. 
+
+The range (min-max) for the greedy heuristic starting solutions is also generally tighter, indicating more consistent performance.
 
 ### Time
 
-The greedy heuristic starting solution significantly reduces the search time across all instances. The average time for greedy heuristic starts is often less than a second, with minimal variation, whereas random starts lead to higher average times and a wider range. This suggests that the greedy heuristic is much more efficient in finding a solution quickly.
+The greedy heuristic starting solution significantly reduces the search time across all instances. The average time for greedy heuristic starts is often less than a second, with minimal variation, whereas random starts lead to higher average times and a wider range. 
 
-## Nodes Swaps vs Edges Swaps:
+This suggests that the greedy heuristic is much more efficient in finding a solution quickly.
+
+## Nodes Swaps vs Edges Swaps
 
 ### Cost
 
-Swapping edges seems to be more effective than swapping nodes, as seen in the lower average costs for Greedy-edges and Steepest-edges strategies across all TSP instances. This is particularly evident when comparing them in algorithms with Random starting solution, where edge swapping consistently yields better costs.
+Swapping edges seems to be more effective than swapping nodes, as seen in the lower average costs for Greedy-edges and Steepest-edges strategies across all TSP instances. 
+
+This is particularly evident when comparing them in algorithms with Random starting solution, where edge swapping consistently yields better costs.
 
 ### Time
 
@@ -171,8 +177,12 @@ The time complexity for edges swap is generally higher than for nodes swap, but 
 
 ### Cost
 
-The greedy search and steepest search methods perform comparably in terms of cost. It was expected that steepest search would be generaly better than greedy, but that not happend. The steepest search methods have wider ranges in results, indicating more variability in their performance.
+The greedy search and steepest search methods perform comparably in terms of cost. 
+
+It was expected that steepest search would be generaly better than greedy, but that not happend. The steepest search methods have wider ranges in results, indicating more variability in their performance.
 
 ### Time
 
-Greedy searches are much faster than steepest searches. The average times for greedy searches are consistently lower than those for steepest searches, with narrower ranges. This indicates that greedy searches are not only faster but also more consistent in their time performance.
+Greedy searches are much faster than steepest searches. The average times for greedy searches are consistently lower than those for steepest searches, with narrower ranges. 
+
+This indicates that greedy searches are not only faster but also more consistent in their time performance.
