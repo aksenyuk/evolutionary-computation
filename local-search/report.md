@@ -42,9 +42,9 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
         Improved = True
         
         While Improved:
-            NeighborsNodeSwap = (generate all possible inter/intra node swaps)
-            NeighborsEdgeSwap = (generate all possible inter/intra edges swaps)
-            Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
+            NeighborsInter = (generate all possible inter-node swaps)
+            NeighborsIntra = (generate all possible intra-nodes/edges swaps)
+            Neighbors = NeighborsInter + NeighborsIntra
             Neighbors = Shuffle(Neighbors)
             Improved = False
             
@@ -70,9 +70,9 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
         Improved = True
         
         While Improved:
-            NeighborsNodeSwap = (generate all possible inter/intra node swaps)
-            NeighborsEdgeSwap = (generate all possible inter/intra edges swaps)
-            Neighbors = NeighborsNodeSwap + NeighborsEdgeSwap
+            NeighborsInter = (generate all possible inter-node swaps)
+            NeighborsIntra = (generate all possible intra-nodes/edges swaps)
+            Neighbors = NeighborsInter + NeighborsIntra
             Improved = False
             
             BestNeighbor = CurrentSolution
@@ -147,46 +147,32 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 # Conclusions
 
-## Performance
+## Starting Solution
 
-### Greedy vs. Steepest
+### Cost
 
-The Steepest approach generally resulted in lower total costs compared to the Greedy approach. This indicates that Steepest, which considers all possible neighbor moves before making a decision, tends to find better solutions at the expense of higher computational time.
+When looking at the average cost, starting with a greedy heuristic tends to lead to better outcomes than starting with a random solution. This is consistent across all TSP instances. The range (min-max) for the greedy heuristic starting solutions is also generally tighter, indicating more consistent performance.
 
-Among the Steepest and Greedy approaches, the ones initialized with a Greedy Heuristic (Greedy-intra-GreedyHeuristic, Greedy-inter-GreedyHeuristic, Steepest-intra-GreedyHeuristic, Steepest-inter-GreedyHeuristic) typically performed better than their counterparts started with a Random approach, indicating the importance of a good starting solution.
+### Time
 
-### Heuristic vs. Random Initial Solutions
+The greedy heuristic starting solution significantly reduces the search time across all instances. The average time for greedy heuristic starts is often less than a second, with minimal variation, whereas random starts lead to higher average times and a wider range. This suggests that the greedy heuristic is much more efficient in finding a solution quickly.
 
-Algorithms initialized with Greedy Heuristics outperformed those with Random initial solutions in terms of total cost, emphasizing the impact of a good starting point.
+## Nodes Swaps vs Edges Swaps:
 
-The consistency in solution quality was also better for algorithms that began with a Greedy Heuristic, suggesting that a good initial solution not only improves performance but also stability.
+### Cost
 
-## Computational Time
+Swapping edges seems to be more effective than swapping nodes, as seen in the lower average costs for Greedy-edges and Steepest-edges strategies across all TSP instances. This is particularly evident when comparing them in algorithms with Random starting solution, where edge swapping consistently yields better costs.
 
-### Greedy vs. Steepest Approaches
+### Time
 
-Greedy methods were faster but did not always provide solutions as good as those from the Steepest methods. 
+The time complexity for edges swap is generally higher than for nodes swap, but the time difference between edges and nodes swaps is minimal.
 
-The latter require more time because they perform a more exhaustive search within the neighborhood before making a move.
+## Greedy vs Steepest Search
 
-The increased time for Steepest Descent methods is justified by the improved solution quality, making them suitable for scenarios where the quality of the solution is paramount and time is a secondary concern.
+### Cost
 
-### Heuristic vs. Random Initial Solutions
+The greedy search and steepest search methods perform comparably in terms of cost. It was expected that steepest search would be generaly better than greedy, but that not happend. The steepest search methods have wider ranges in results, indicating more variability in their performance.
 
-Starting with Greedy Heuristics generally led to faster convergence compared to Random initial solutions. 
+### Time
 
-This is likely because Greedy Heuristics begin the search closer to good local optima, reducing the number of iterations needed.
-
-## Intra vs. Inter Neighborhoods
-
-### Performance
-
-Intra-neighborhood approaches (where the moves are restricted within the current solution) and inter-neighborhood approaches (where the moves can include swapping with elements outside the current solution) have shown competitive performances. 
-
-However, the inter-neighborhood methods tend to provide slightly better solutions, possibly due to a broader search space.
-
-### Computational Time
-
-Inter-neighborhood searches generally took more time than intra-neighborhood searches. 
-
-This is expected because inter-neighborhood searches have a larger search space to explore, thus requiring more computational effort.
+Greedy searches are much faster than steepest searches. The average times for greedy searches are consistently lower than those for steepest searches, with narrower ranges. This indicates that greedy searches are not only faster but also more consistent in their time performance.
