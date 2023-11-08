@@ -101,11 +101,11 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
 ### Table of Cost
 
-<img src="plots/costs.png"/>
+<img src="plots/costs_upd.png"/>
 
 ### Table of Time
 
-<img src="plots/times.png"/>
+<img src="plots/times_upd.png"/>
 
 ## Best Solutions Plots
 
