@@ -1,0 +1,63 @@
+FUNCTION SteepestLocalSearchDeltas(Solution, DistanceMatrix, Costs)
+
+    LM = SortedSet() //to store moves and their deltas
+    Calculate the size of the solution and the total number of nodes
+    Improved = True
+
+    WHILE (Improved is True):
+        Improved = False
+
+        // Inter moves
+        FOR each Move in combination of inner node and outer node: 
+            Delta = (calculate delta for inter move)
+            IF (Delta > 0): //brings improvement
+                LM.add((Delta, Move, MoveInfo))
+
+        // Intra moves
+        FOR each Move in combination of two edges in solution:
+            Delta = (calculate delta for intra edge move)
+            IF (Delta > 0): //brings improvement
+                LM.add((Delta, Move, MoveInfo))
+
+        // Process LM
+        FOR each Move in LM:
+            ToApply, ToStore = CheckMoveValidity(Solution, Move)
+            IF (ToApply is True):
+                Improved = True
+                Solution = (apply move)
+                LM.remove(Move) //move is made, remove it
+            ELSE IF (ToStore is not True):
+                LM.remove(Move) //move is no valdid
+            IF Improved:
+                Break loop //if move already found and made
+
+    RETURN solution
+
+
+
+
+
+FUNCTION CheckMoveValidity(Solution, Move)
+    Decompose Move into MoveType, MoveNodes, and AdjacentNodes
+
+    IF (MoveType == 'inter'):
+        ExternalNode, InternalNode = MoveNodes
+        AdjacentNodePrev, AdjacentNodeNext = AdjacentNodes
+
+        IF (InternalNode in Solution and ExternalNode not in Solution):
+            // Check existence and order of edges involving InternalNode
+            EdgePrevExists = ((AdjacentNodePrev, InternalNode) forms an edge in correct order in Solution)
+            EdgeNextExists = ((InternalNode, AdjacentNodeNext) forms an edge in correct order in Solution)
+            RETURN (EdgePrevExists and EdgeNextExists, not (EdgePrevExists and EdgeNextExists))
+        ELSE:
+            RETURN (False, False)
+
+    IF (MoveType == 'intra'):
+        Node1, Node2 = MoveNodes
+        AdjacentNode1, AdjacentNode2 = AdjacentNodes
+
+        // Check existence and order of edges for intra move
+        Edge1Exists = ((Node1, AdjacentNode1) forms an edge in correct order in Solution)
+        Edge2Exists = ((Node2, AdjacentNode2) forms an edge in correct order in Solution)
+        RETURN (Edge1Exists and Edge2Exists, not (Edge1Exists and Edge2Exists))
+
