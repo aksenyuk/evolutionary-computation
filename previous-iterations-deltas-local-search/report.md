@@ -77,6 +77,31 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
         RETURN solution
 
+<div style="page-break-after: always"></div>
+
+    FUNCTION CheckMoveValidity(Solution, Move)
+        Decompose Move into MoveType, MoveNodes, and AdjacentNodes
+
+        IF (MoveType == 'inter'):
+            ExternalNode, InternalNode = MoveNodes
+            AdjacentNodePrev, AdjacentNodeNext = AdjacentNodes
+
+            IF (InternalNode in Solution and ExternalNode not in Solution):
+                // Check existence and order of edges involving InternalNode
+                EdgePrevExists = ((AdjacentNodePrev, InternalNode) forms an edge in correct order in Solution)
+                EdgeNextExists = ((InternalNode, AdjacentNodeNext) forms an edge in correct order in Solution)
+                RETURN (EdgePrevExists and EdgeNextExists, not (EdgePrevExists and EdgeNextExists))
+            ELSE:
+                RETURN (False, False)
+
+        IF (MoveType == 'intra'):
+            Node1, Node2 = MoveNodes
+            AdjacentNode1, AdjacentNode2 = AdjacentNodes
+
+            // Check existence and order of edges for intra move
+            Edge1Exists = ((Node1, AdjacentNode1) forms an edge in correct order in Solution)
+            Edge2Exists = ((Node2, AdjacentNode2) forms an edge in correct order in Solution)
+            RETURN (Edge1Exists and Edge2Exists, not (Edge1Exists and Edge2Exists))
 
 <div style="page-break-after: always"></div>
 
