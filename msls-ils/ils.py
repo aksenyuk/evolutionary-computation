@@ -8,6 +8,8 @@ import copy
 import functools
 import warnings
 import os
+import time
+import random
 
 warnings.filterwarnings("ignore")
 
@@ -170,38 +172,122 @@ def steepest_local_search(solution, distance_matrix, costs):
         return solution
 
 
-def msls(instance, num_runs=200):
+def random_insertion(solution, n=5):
+    for i in range(n):
+        which, where = random.randint(0, len(solution) - 1), random.randint(
+            0, len(solution)
+        )
+        solution.insert(where, solution.pop(which))
+    return solution
+
+
+def double_bridge_move(solution):
+    a, b, c = sorted(random.sample(range(1, len(solution) - 2), 3))
+    return solution[:a] + solution[c:] + solution[b:c] + solution[a:b]
+
+
+def shuffle_sub_tour(solution):
+    n = len(solution)
+    sub_tour_length = random.randint(int(0.05 * n), int(0.15 * n))
+    start_idx = random.randint(0, n - sub_tour_length)
+    end_idx = start_idx + sub_tour_length
+
+    sub_tour = solution[start_idx:end_idx]
+    random.shuffle(sub_tour)
+    solution = solution[:start_idx] + sub_tour + solution[end_idx:]
+
+    return solution
+
+
+def random_jump(solution):
+    n = len(solution)
+    sub_tour_length = random.randint(int(0.05 * n), int(0.15 * n))
+    start_idx = random.randint(0, n - sub_tour_length)
+    end_idx = start_idx + sub_tour_length
+    sub_tour = solution[start_idx:end_idx]
+
+    new_solution = solution[:start_idx] + solution[end_idx:]
+
+    insert_idx = random.randint(0, len(new_solution))
+    new_solution = new_solution[:insert_idx] + sub_tour + new_solution[insert_idx:]
+
+    return new_solution
+
+
+def k_opt_move(solution, k=4):
+    n = len(solution)
+    edges = sorted(random.sample(range(n), k))
+    edges.append(edges[0])
+
+    new_solution = []
+    for i in range(k):
+        start, end = edges[i], edges[i + 1]
+        if start < end:
+            new_solution.extend(solution[start:end])
+        else:
+            new_solution.extend(solution[start:] + solution[:end])
+
+        if i % 2 == 1:
+            new_solution[-(end - start) :] = reversed(new_solution[-(end - start) :])
+
+    return new_solution
+
+
+def perturb(solution):
+    perturbations = (
+        random_insertion,
+        double_bridge_move,
+        shuffle_sub_tour,
+        random_jump,
+        k_opt_move,
+    )
+    action = random.choice(perturbations)
+    solution = action(solution)
+    return solution
+
+
+def ils(instance, end_time):
+    start = time.time()
+
     df = pd.read_csv(f"./data/{instance}.csv", sep=";", names=["x", "y", "cost"])
     costs = df.cost.to_numpy()
     distance_matrix = get_distance_matrix(df)
 
-    best_total_cost, best_solution = float("inf"), None
-    for _ in range(num_runs):
-        solution = random_search(distance_matrix)
-        new_solution = steepest_local_search(solution, distance_matrix, costs)
-        total_cost = get_total_cost(new_solution, distance_matrix, costs)
-        if total_cost < best_total_cost:
-            best_total_cost = total_cost
-            best_solution = new_solution[:]
+    solution = random_search(distance_matrix)
+    best_total_cost = get_total_cost(solution, distance_matrix, costs)
 
-    return best_total_cost, best_solution
+    counter = 0
+    while True:
+        solution_perturbed = solution[:]
+        solution_perturbed = perturb(solution_perturbed)
+        new_solution = steepest_local_search(solution_perturbed, distance_matrix, costs)
+        counter += 1
+        new_total_cost = get_total_cost(new_solution, distance_matrix, costs)
+
+        if new_total_cost < best_total_cost:
+            best_total_cost = new_total_cost
+            solution = new_solution[:]
+
+        if time.time() - start >= end_time:
+            return best_total_cost, solution, counter
 
 
 def main():
-    # if not os.path.exists(folder_name):
-    #     os.makedirs("results")
-
     instances = ("TSPA", "TSPB", "TSPC", "TSPD")
+    # end_times = (1264, 1310, 1267, 1269)
+    end_times = (5, 5, 5, 5)
 
-    for instance in instances:
+    for instance, end_time in zip(instances, end_times):
         start = perf_counter()
-        total_cost, solution = msls(instance)
+        total_cost, solution, counter = ils(instance, end_time)
         end = perf_counter()
 
         total_time = end - start
 
-        with open("./results/results.txt", "a+") as file:
-            text_to_append = f"{instance} - {total_cost} - {total_time} - {solution}\n"
+        with open("./results/results_ils.txt", "a+") as file:
+            text_to_append = (
+                f"{instance} - {total_cost} - {total_time} - {counter} - {solution}\n"
+            )
 
             file.write(text_to_append)
 
