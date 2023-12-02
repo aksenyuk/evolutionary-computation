@@ -80,13 +80,13 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
     FUNCTION Perturb(Solution):
         
-        Randomly choose and apply to solution one of actions:
+        Randomly choose and apply to solution one of the actions:
 
-            1) Randomly selects n cities from the current solution and inserts them into random positions within the solution
-            2) Divides the solution into four segments of random size, and then rearranges these segments in a specific order
-            3) Selects a sub-tour of random length (between 5% to 15% of the total tour length) and shuffles the order of cities within this sub-tour
-            4) Similar to the shuffle sub-tour, this perturbation also selects a sub-tour of random length. However, instead of shuffling, it removes this sub-tour from its original position and inserts it at a different random location in the solution
-            5) Removes k edges in the solution, and the resulting segments are reconnected in a different order
+            1) Randomly select n cities from the current solution and insert them into random positions within the solution
+            2) Divide the solution into four segments of random size, and then rearrange these segments in a specific order
+            3) Select a sub-path of random length (between 5% to 15% of the total path length) and shuffle the order of cities within this sub-path
+            4) Select a sub-path of random length, remove this sub-path from its original position and insert it at a different random location in the solution
+            5) Remove k edges in the solution, reconnect the resulting segments in a different order
 
 
 <div style="page-break-after: always"></div>
@@ -114,6 +114,8 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 <div style="page-break-after: always"></div>
 
 <img src="plots/ILS.png"/>
+
+### Number of runs of Steepest Local Search in ILS
 
 <img src="plots/ils_no_iters.png"/>
 
@@ -150,12 +152,12 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 ## Cost Efficiency
 
-Both MSLS and ILS consistently outperform the steepest local search variants in terms of cost efficiency across all datasets.
+Both MSLS and ILS consistently outperform the Steepest Local Search variants in terms of cost efficiency across all instances.
 
-ILS tends to provide slightly lower costs compared to MSLS on average.
+ILS  on average tends to provide slightly lower costs compared to MSLS.
 
 ## Time Efficiency
 
-Both MSLS and ILS exhibit higher computational times compared to steepest local search variants. 
+Both MSLS and ILS exhibit higher computational times compared to Steepest Local Search variants. 
 
 This is expected as they involve multiple iterations and exploration steps.
