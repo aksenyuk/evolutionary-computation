@@ -3,17 +3,11 @@ import pandas as pd
 from scipy.spatial.distance import pdist, squareform
 import time
 from itertools import combinations, product
-import copy
-import functools
-import random
 import argparse
 
 import warnings
 
 warnings.filterwarnings("ignore")
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 
 def get_distance_matrix(df):
@@ -300,7 +294,7 @@ def main():
 
         total_time = end - start
 
-        with open("./results/results_lsns.txt", "a+") as file:
+        with open(f"./results/results_lsns_{str(use_local)}.txt", "a+") as file:
             text_to_append = (
                 f"{instance} - {total_cost} - {total_time} - {counter} - {solution}\n"
             )
