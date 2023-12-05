@@ -28,7 +28,7 @@
 
     FUNCTION Destroy(Solution):
 
-        NumNodesToDestroy = (integer from normal distribution with mean in 30 and std of 10 in range [10, 50])
+        NumNodesToDestroy = (random integer between 20 and 50)
 
         Weights = (compute weight for each node. weight = DistanceMatrix[prev][cur] + Costs[cur] + DistanceMatrix[cur][next])
         Weights = Weights / Sum(Weights)
