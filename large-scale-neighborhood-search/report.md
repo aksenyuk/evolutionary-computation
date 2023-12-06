@@ -143,3 +143,5 @@ However, they do not outperform Iterated Local Search in terms of cost efficienc
 ## Number of iterations
 
 Large Scale Neighborhood Search with and without Local Search achieve approximately same cost results in almost twice as less number of iterations.
+
+Though without Local Search, it manages to do around 20-40% more iterations, depending on the instance.
