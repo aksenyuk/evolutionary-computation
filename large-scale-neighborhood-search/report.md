@@ -83,10 +83,6 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
 <img src="plots/times.png"/>
 
-### Number of runs of Steepest Local Search in LSNS with LS
-
-<img src="plots/lsns_no_iters.png"/>
-
 <div style="page-break-after: always"></div>
 
 ## Best Solutions Plots
@@ -98,6 +94,10 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 <div style="page-break-after: always"></div>
 
 <img src="plots/LSNS_noLS.png"/>
+
+### Number of runs of Steepest Local Search in LSNS with LS
+
+<img src="plots/lsns_no_iters.png"/>
 
 <div style="page-break-after: always"></div>
 
