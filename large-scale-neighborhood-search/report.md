@@ -138,7 +138,7 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 Large Scale Neighborhood Search with Local Search and Large Scale Neighborhood Search without Local Search perform similarly to each other in terms of costs. 
 
-However, they do not outperform Iterated Local Search" in terms of cost efficiency, but there is only slight difference.
+However, they do not outperform Iterated Local Search in terms of cost efficiency, but there is only slight difference.
 
 ## Number of iterations
 
