@@ -221,7 +221,7 @@ def sim_to_avg(solutions):
     return node_sims, edge_sims
 
 
-def run(instance):
+def run(instance, num_runs):
     best_solutions = {
         "TSPA": [
             48,
@@ -637,7 +637,7 @@ def run(instance):
     costs = df.cost.to_numpy()
     distance_matrix = get_distance_matrix(df)
 
-    solutions = get_solutions(instance, distance_matrix, costs, n=3)
+    solutions = get_solutions(instance, distance_matrix, costs, num_runs)
     total_costs = [
         get_total_cost(solution, distance_matrix, costs) for solution in solutions
     ]
@@ -662,7 +662,7 @@ def main():
 
     instance = f"TSP{args.instance}"
 
-    res = run(instance)
+    res = run(instance, 1000)
 
     with open(f"results/{instance}_res.pkl", "wb") as file:
         pickle.dump(res, file)
