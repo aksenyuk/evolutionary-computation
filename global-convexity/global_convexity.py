@@ -1,21 +1,14 @@
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import pdist, squareform
-import time
 from itertools import combinations, product
-import copy
-import functools
 import random
-import ast
 import pickle
 import argparse
 
 import warnings
 
 warnings.filterwarnings("ignore")
-
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 
 def get_distance_matrix(df):
