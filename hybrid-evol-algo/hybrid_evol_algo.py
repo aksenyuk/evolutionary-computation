@@ -344,17 +344,29 @@ def main():
     oper_num = args.oper
     instance = args.instance
 
-    end_times = {'TSPA': 1264, 'TSPB': 1310, 'TSPC': 1267, 'TSPD': 1269}
+    end_times = {"TSPA": 1264, "TSPB": 1310, "TSPC": 1267, "TSPD": 1269}
     # end_times = {"TSPA": 200, "TSPB": 200, "TSPC": 200, "TSPD": 200}
 
-    start = time.perf_counter()
-    total_cost, solution, counter = evol_algo(instance, end_times[instance], oper_num)
-    end = time.perf_counter()
+    times = []
+    costs = []
+    counters = []
+    solutions = []
 
-    total_time = end - start
+    for _ in range(20):
+        start = time.perf_counter()
+        total_cost, solution, counter = evol_algo(
+            instance, end_times[instance], oper_num
+        )
+        end = time.perf_counter()
+        total_time = end - start
+
+        times.append(total_time)
+        costs.append(total_cost)
+        counters.append(counter)
+        solutions.append(solution)
 
     with open("results/results.txt", "a+") as file:
-        text_to_append = f"{instance} - {oper_num} - {total_cost} - {total_time} - {counter} - {solution}\n"
+        text_to_append = f"{instance} / {oper_num} / {np.mean(costs)} ({np.min(costs)} - {np.max(costs)}) / {np.mean(times)} ({np.min(times)} - {np.max(times)}) / {np.mean(counters)} ({np.min(counters)} - {np.max(counters)}) / {solutions[costs.index(min(costs))]}\n"  # noqa: E501
 
         file.write(text_to_append)
 
