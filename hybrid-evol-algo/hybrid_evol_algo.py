@@ -344,8 +344,8 @@ def main():
     oper_num = args.oper
     instance = args.instance
 
-    # end_times = {'TSPA': 1264, 'TSPB': 1310, 'TSPC': 1267, 'TSPD': 1269}
-    end_times = {"TSPA": 200, "TSPB": 200, "TSPC": 200, "TSPD": 200}
+    end_times = {'TSPA': 1264, 'TSPB': 1310, 'TSPC': 1267, 'TSPD': 1269}
+    # end_times = {"TSPA": 200, "TSPB": 200, "TSPC": 200, "TSPD": 200}
 
     start = time.perf_counter()
     total_cost, solution, counter = evol_algo(instance, end_times[instance], oper_num)
@@ -353,7 +353,7 @@ def main():
 
     total_time = end - start
 
-    with open("./results/results.txt", "a+") as file:
+    with open("results/results.txt", "a+") as file:
         text_to_append = f"{instance} - {oper_num} - {total_cost} - {total_time} - {counter} - {solution}\n"
 
         file.write(text_to_append)
