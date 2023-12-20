@@ -311,9 +311,10 @@ def evol_algo(instance, end_time, oper_num):
 
         if oper_num == "1":
             child = operator_1(parent1, parent2)
-            child = steepest_local_search(child, distance_matrix, costs)
+            # child = steepest_local_search(child, distance_matrix, costs)
         elif oper_num == "2":
             child = operator_2(parent1, parent2, distance_matrix, costs)
+            child = steepest_local_search(child, distance_matrix, costs)
         else:
             raise ValueError("ti huesos")
 
