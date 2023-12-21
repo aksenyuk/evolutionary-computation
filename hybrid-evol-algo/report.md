@@ -142,7 +142,7 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 # Conclusions
 
-<img src="plots/costs_bar_plots.jpg"/>
+<img src="plots/costs_bar_plot.jpg"/>
 
 When it comes to minimum cost, Hybrid Evolutionary Algorithm with Operator 1 and Local Search applied has shown best performance among all of the rest variants of HEA examined.
 
