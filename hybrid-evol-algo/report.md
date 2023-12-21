@@ -142,3 +142,16 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 # Conclusions
 
+<img src="plots/costs_bar_plots.png"/>
+
+When it comes to minimum cost, Hybrid Evolutionary Algorithm with Operator 1 and Local Search applied has shown best performance among all of the rest variants of HEA examined.
+
+### Minimum Cost
+
+- In the case of TSPA, both ILS and HEA_oper1_LS reached the identical minimum cost. Meanwhile, HEA_oper2, whether paired with Local Search (LS) or not, also demonstrated commendable performance, albeit marginally inferior to LSNS.
+
+- For the TSPB instance, ILS outperformed the others by a narrow margin. In this scenario, the variations of HEA_oper2 surpassed LSNS in terms of effectiveness.
+
+- With TSPC and TSPD, HEA_oper_LS set new best solution, outshining all other methods tested so far. Intriguingly, its counterpart without Local Search fared the poorest historically.
+
+Overall, the influence of incorporating Local Search is markedly evident in the results, particularly for the TSPC and TSPD scenarios.
