@@ -144,13 +144,13 @@ When it comes to minimum cost, Hybrid Evolutionary Algorithm with Operator 1 and
 
 ### Minimum Cost
 
-- In the case of TSPA, both ILS and HEA_oper1_LS reached the identical minimum cost. Meanwhile, HEA_oper2, whether paired with Local Search (LS) or not, also demonstrated commendable performance, albeit marginally inferior to LSNS.
+- In the case of TSPA, both ILS and HEA_oper1_LS reached almost identical minimum cost, with ILS scoring better only by 30 units. Meanwhile, HEA_oper2, whether paired with Local Search (LS) or not, also demonstrated relatively good performance, slightly worse than LSNS.
 
-- For the TSPB instance, ILS outperformed the others by a narrow margin. In this scenario, the variations of HEA_oper2 surpassed LSNS in terms of effectiveness.
+- For TSPB, ILS narrowly outperformed the other methods. For this instance, the variations of HEA_oper2 surpassed LSNS in terms of effectiveness.
 
-- With TSPC and TSPD, HEA_oper_LS set new best solution, outshining all other methods tested so far. Intriguingly, its counterpart without Local Search fared the poorest historically.
+- With TSPC and TSPD, HEA_oper_LS set new best solution among all other methods tested so far. Notably, its version without Local Search provided the poorest result historically.
 
-Overall, the influence of incorporating Local Search is markedly evident in the results, particularly for the TSPC and TSPD scenarios.
+Overall, the influence of incorporating Local Search is markedly evident in the results, particularly for the TSPC and TSPD instances.
 
 <div style="page-break-after: always"></div>
 
