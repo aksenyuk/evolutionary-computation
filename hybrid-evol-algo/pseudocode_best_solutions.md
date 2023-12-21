@@ -1,8 +1,8 @@
 ## Pseudocode
 
-### Large Scale Neighbourhood Search
+### HEA
 
-    FUNCTION EvolAlgo(DistanceMatrix, Costs, EndTime, PopSize, Oper, UseLocal):
+    FUNCTION HEA(DistanceMatrix, Costs, EndTime, PopSize, Oper, UseLocal):
 
         StartTime = time()
         Counter = 0
@@ -32,7 +32,7 @@
 
         BestSolution, BestTotalCost = (get best solution from population and its total cost)
 
-        RERURN BestSolution, BestTotalCost, Counter
+        RETURN BestSolution, BestTotalCost, Counter
 
     
     Operator_1(Parent1, Parent2):
