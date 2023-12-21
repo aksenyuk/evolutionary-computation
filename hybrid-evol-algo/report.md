@@ -29,48 +29,48 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 
 ## Hybrid Evolutionary Algorithm
 
-FUNCTION HEA(DistanceMatrix, Costs, EndTime, PopSize, Oper, UseLocal):
-
-    StartTime = time()
-    Counter = 0
-
-    Population = (generate 20 solutions using SteepestLocalSearch)
-    TotalCosts = (compute total costs for each of the solutions from population)
-
-    WHILE (time() - StartTime < EndTime):
-        Parent1, Parent2 = (uniformly randomly choose 2 different solutions from population)
-
-        IF (Oper = 1):
-            Child = Operator_1(Parent1, Parent2)
-        ELSE IF (Oper = 2):
-            Child = Operator_2(Parent1, Parent2)
-
-        IF (UseLocal is True):
-            Child = SteepestLocalSearch(Child, DistanceMatrix, Costs)
-
-        ChildTotalCost = GetTotalCost(Child, DistanceMatrix, Costs)
-        IF (ChildTotalCost not it TotalCosts):
-            MaxTotalCost, Idx = (get worst total cost and its index)
-            IF (ChildTotalCost < MaxTotalCost):
-                Population[Idx] = Child
-                TotalCosts[Idx] = ChildTotalCost
-
-        Counter += 1
-
-    BestSolution, BestTotalCost = (get best solution from population and its total cost)
-
-    RETURN BestSolution, BestTotalCost, Counter
-
-Operator_1(Parent1, Parent2):
-    - get all common edges and nodes
-    - place all common edges in empty child in places as they are in one of parents
-    - place all remain common nodes in respective places
-    - fill empty places randomly, so that there are no repetitions
-
-Operator_2(Parent1, Parent2):
-    - get all common edges and nodes
-    - remove from one parent all nodes and edges that are not in common
-    - apply Greedy-2-regret-weighted to complete solution
+    FUNCTION HEA(DistanceMatrix, Costs, EndTime, PopSize, Oper, UseLocal):
+    
+        StartTime = time()
+        Counter = 0
+    
+        Population = (generate 20 solutions using SteepestLocalSearch)
+        TotalCosts = (compute total costs for each of the solutions from population)
+    
+        WHILE (time() - StartTime < EndTime):
+            Parent1, Parent2 = (uniformly randomly choose 2 different solutions from population)
+    
+            IF (Oper = 1):
+                Child = Operator_1(Parent1, Parent2)
+            ELSE IF (Oper = 2):
+                Child = Operator_2(Parent1, Parent2)
+    
+            IF (UseLocal is True):
+                Child = SteepestLocalSearch(Child, DistanceMatrix, Costs)
+    
+            ChildTotalCost = GetTotalCost(Child, DistanceMatrix, Costs)
+            IF (ChildTotalCost not it TotalCosts):
+                MaxTotalCost, Idx = (get worst total cost and its index)
+                IF (ChildTotalCost < MaxTotalCost):
+                    Population[Idx] = Child
+                    TotalCosts[Idx] = ChildTotalCost
+    
+            Counter += 1
+    
+        BestSolution, BestTotalCost = (get best solution from population and its total cost)
+    
+        RETURN BestSolution, BestTotalCost, Counter
+    
+    Operator_1(Parent1, Parent2):
+        - get all common edges and nodes
+        - place all common edges in empty child in places as they are in one of parents
+        - place all remain common nodes in respective places
+        - fill empty places randomly, so that there are no repetitions
+    
+    Operator_2(Parent1, Parent2):
+        - get all common edges and nodes
+        - remove from one parent all nodes and edges that are not in common
+        - apply Greedy-2-regret-weighted to complete solution
 
 
 <div style="page-break-after: always"></div>
