@@ -107,10 +107,6 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 <img src="plots/TSPD.png"/>
 
-### Number of riterations
-
-<img src="plots/hea_no_iters.png"/>
-
 <div style="page-break-after: always"></div>
 
 # Best solution among all methods so far
@@ -155,3 +151,13 @@ When it comes to minimum cost, Hybrid Evolutionary Algorithm with Operator 1 and
 - With TSPC and TSPD, HEA_oper_LS set new best solution, outshining all other methods tested so far. Intriguingly, its counterpart without Local Search fared the poorest historically.
 
 Overall, the influence of incorporating Local Search is markedly evident in the results, particularly for the TSPC and TSPD scenarios.
+
+<div style="page-break-after: always"></div>
+
+### Number of iterations
+
+<img src="plots/hea_no_iters.png"/>
+
+Regardless of the operator chosen, Hybrid Evolutionary Algorithms consistently perform a significantly higher number of iterations. 
+
+The sole exception is HEA_ope1_LS in the TSPC instance, where the iteration count falls below that of ILS.
