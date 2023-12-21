@@ -17,7 +17,7 @@ Distances between nodes are computed as Euclidean distances and rounded to the n
 
 ### Hybrid Evolutionary Algorithm
 
-
+In Hybrid Evolutionary Algorithms evolutionary approaches are combined with other optimization methods. This can include techniques like Local Search, which refines individual solutions, or machine learning methods that guide the search process. In this assignment, we will stick to Local Search solution, particularly Steepest Local Search.
 
 ## Source code
 
