@@ -39,6 +39,7 @@ for ax, column, ymin in zip(axes[0], instances, scaling):
     ax.set_xticklabels(ax.get_xticklabels(), fontsize=9)
     ax.set_ylabel("Minimum Cost")
     ax.set_ylim(ymin)
+    ax.grid(True, linestyle='--')
     add_cost_values(ax)
 
 for ax, column, ymin in zip(axes[1], instances, scaling):
@@ -47,6 +48,7 @@ for ax, column, ymin in zip(axes[1], instances, scaling):
     ax.set_xticklabels(ax.get_xticklabels(), fontsize=9)
     ax.set_ylabel("Average Cost")
     ax.set_ylim(ymin)
+    ax.grid(True, linestyle='--')
     add_cost_values(ax)
 
 fig.tight_layout()
