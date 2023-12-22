@@ -54,9 +54,7 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
                 IF (ChildTotalCost < MaxTotalCost):
                     Population[Idx] = Child
                     TotalCosts[Idx] = ChildTotalCost
-    
             Counter += 1
-    
         BestSolution, BestTotalCost = (get best solution from population and its total cost)
     
         RETURN BestSolution, BestTotalCost, Counter
@@ -66,7 +64,6 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
         - place all common edges in empty child in places as they are in one of parents
         - place all remain common nodes in respective places
         - fill empty places randomly, so that there are no repetitions
-    
     Operator_2(Parent1, Parent2):
         - get all common edges and nodes
         - remove from one parent all nodes and edges that are not in common
@@ -82,6 +79,8 @@ Link: [Source Code](https://github.com/aksenyuk/evolutionary-computation/blob/ma
 ### Table of Cost
 
 <img src="plots/costs.png"/>
+
+<div style="page-break-after: always"></div>
 
 ### Table of Time
 
@@ -138,7 +137,7 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 # Conclusions
 
-<img src="plots/costs_bar_plot.jpg"/>
+<img src="plots/costs_bar_plot.png"/>
 
 When it comes to minimum cost, Hybrid Evolutionary Algorithm with Operator 1 and Local Search applied has shown best performance among all of the rest variants of HEA examined.
 
