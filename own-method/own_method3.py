@@ -433,9 +433,10 @@ def evol_algo(instance, end_time):
             parent = random.choice(population)
             child = perturb(parent)
 
-        child = simulated_annealing(child, distance_matrix, costs)
-
-        child = steepest_local_search(child, distance_matrix, costs)
+        if random.randint(0, 1) == 0:
+            child = steepest_local_search(child, distance_matrix, costs)
+        else:
+            child = simulated_annealing(child, distance_matrix, costs)
 
         child_total_cost = get_total_cost(child, distance_matrix, costs)
 
@@ -477,7 +478,7 @@ def main():
         counters.append(counter)
         solutions.append(solution)
 
-    with open("results/results.txt", "a+") as file:
+    with open("results/results3.txt", "a+") as file:
         text_to_append = f"{instance} / {np.mean(costs)} ({np.min(costs)} - {np.max(costs)}) / {round(np.mean(times), 3)} ({round(np.min(times), 3)} - {round(np.max(times), 3)}) / {np.mean(counters)} ({np.min(counters)} - {np.max(counters)}) / {solutions[costs.index(min(costs))]}\n"  # noqa: E501
 
         file.write(text_to_append)
