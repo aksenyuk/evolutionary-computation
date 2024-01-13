@@ -374,6 +374,38 @@ def operator_2(parent1, parent2, distance_matrix, costs):
     return modified_parent
 
 
+def simulated_annealing(
+    initial_solution,
+    distance_matrix,
+    costs,
+    T=10000,
+    cooling_rate=0.995,
+    stopping_temperature=1,
+):
+    current_solution = initial_solution[:]
+    current_cost = get_total_cost(current_solution, distance_matrix, costs)
+    best_solution = current_solution[:]
+    best_cost = current_cost
+
+    while T > stopping_temperature:
+        neighbor = perturb(current_solution.copy())
+        neighbor_cost = get_total_cost(neighbor, distance_matrix, costs)
+
+        if neighbor_cost < current_cost or np.random.uniform(0, 1) < np.exp(
+            (current_cost - neighbor_cost) / T
+        ):
+            current_solution = neighbor[:]
+            current_cost = neighbor_cost
+
+            if neighbor_cost < best_cost:
+                best_solution = neighbor[:]
+                best_cost = neighbor_cost
+
+        T *= cooling_rate
+
+    return best_solution
+
+
 def evol_algo(instance, end_time):
     start = time.time()
 
@@ -395,29 +427,24 @@ def evol_algo(instance, end_time):
             oper_num = random.randint(1, 2)
             if oper_num == 1:
                 child = operator_1(parent1, parent2)
-                # child = steepest_local_search(child, distance_matrix, costs)
             elif oper_num == 2:
                 child = operator_2(parent1, parent2, distance_matrix, costs)
-                # child = steepest_local_search(child, distance_matrix, costs)
-
         else:
-            parent = random.sample(population, 1)[0]
+            parent = random.choice(population)
             child = perturb(parent)
+
+        child = simulated_annealing(child, distance_matrix, costs)
 
         child = steepest_local_search(child, distance_matrix, costs)
 
         child_total_cost = get_total_cost(child, distance_matrix, costs)
 
-        if child_total_cost in total_costs:
-            continue
-
-        max_total_cost = max(total_costs)
-        if child_total_cost > max_total_cost:
-            continue
-
-        max_total_cost_idx = total_costs.index(max_total_cost)
-        total_costs[max_total_cost_idx] = child_total_cost
-        population[max_total_cost_idx] = child
+        if child_total_cost not in total_costs:
+            max_total_cost = max(total_costs)
+            if child_total_cost < max_total_cost:
+                max_total_cost_idx = total_costs.index(max_total_cost)
+                total_costs[max_total_cost_idx] = child_total_cost
+                population[max_total_cost_idx] = child
 
     best_total_cost = min(total_costs)
     best_solution = population[total_costs.index(best_total_cost)]
@@ -431,8 +458,8 @@ def main():
 
     instance = args.instance
 
-    end_times = {"TSPA": 1264, "TSPB": 1310, "TSPC": 1267, "TSPD": 1269}
-    # end_times = {"TSPA": 200, "TSPB": 200, "TSPC": 200, "TSPD": 200}
+    # end_times = {"TSPA": 1264, "TSPB": 1310, "TSPC": 1267, "TSPD": 1269}
+    end_times = {"TSPA": 1500, "TSPB": 1500, "TSPC": 1500, "TSPD": 1500}
 
     times = []
     costs = []
