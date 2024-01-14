@@ -180,6 +180,8 @@ def steepest_local_search(solution, distance_matrix, costs):
 def greedy_2_regret_weighted(
     distance_matrix, partial_solution, costs, target_size, regret_weight=0.5
 ):
+    if len(partial_solution) == 0:
+        partial_solution = random_search(distance_matrix)
     num_nodes = len(distance_matrix)
     to_visit = set(range(num_nodes)) - set(partial_solution)
 
@@ -406,6 +408,12 @@ def simulated_annealing(
     return best_solution
 
 
+def tournament(population, total_costs, n=3):
+    indices = random.choices(range(len(population)), k=n)
+    idx = min(indices, key=lambda x: total_costs[x])
+    return population[idx]
+
+
 def evol_algo(instance, end_time):
     start = time.time()
 
@@ -421,22 +429,33 @@ def evol_algo(instance, end_time):
     counter = 0
     while time.time() - start < end_time:
         counter += 1
+        action = random.randint(1, 3)
 
-        if random.randint(0, 1) == 0:
+        if action == 1:
             if random.randint(0, 1) == 0:
-                parent1, parent2 = random.sample(population, 2)
+                # parent1, parent2 = random.sample(population, 2)
+                parent1 = tournament(population, total_costs)
+                parent2 = tournament(population, total_costs)
                 oper_num = random.randint(1, 2)
                 if oper_num == 1:
                     child = operator_1(parent1, parent2)
                 elif oper_num == 2:
                     child = operator_2(parent1, parent2, distance_matrix, costs)
             else:
-                parent = random.choice(population)
+                parent = tournament(population, total_costs)
                 child = perturb(parent)
             child = steepest_local_search(child, distance_matrix, costs)
 
-        else:
-            child = simulated_annealing(child, distance_matrix, costs)
+        elif action == 2:
+            parent = tournament(population, total_costs)
+            child = simulated_annealing(parent, distance_matrix, costs)
+
+        # elif action == 3:
+        #     idx = total_costs.index(min(total_costs))
+        #     child = random_search(distance_matrix)
+        #     population[idx] = child
+        #     total_costs[idx] = get_total_cost(child, distance_matrix, costs)
+        #     continue
 
         child_total_cost = get_total_cost(child, distance_matrix, costs)
 
