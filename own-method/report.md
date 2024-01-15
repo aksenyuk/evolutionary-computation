@@ -158,11 +158,11 @@ Link: [Source Code ACO](https://github.com/aksenyuk/evolutionary-computation/blo
 
 <div style="page-break-after: always"></div>
 
-### Table of Time
+<!-- ### Table of Time
 
 <img src="plots/times.png"/>
 
-<div style="page-break-after: always"></div>
+<div style="page-break-after: always"></div> -->
 
 ### Table of Iterations
 
@@ -214,7 +214,7 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 # Conclusions
 
 - Own_method_SA_HEA performs relatively same as HEA_Oper_1 and ILS, despite much less number of iterations.
-- Ant colony doesn't performs as good as expected, beign the worst algo among last ones.
+- Ant colony doesn't performs as good as expected, beign the worst algo among last ones. Note that due to technical issues ACO was run only for 7 repetitions.
 
 <div style="page-break-after: always"></div>
 
