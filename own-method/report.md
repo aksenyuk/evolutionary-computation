@@ -166,25 +166,21 @@ Link: [Source Code ACO](https://github.com/aksenyuk/evolutionary-computation/blo
 
 ### Table of Iterations
 
-<img src="plots/own_no_iters.png"/>
+<img src="plots/iterations.png"/>
+
+### Plots of Cost
+
+<img src="plots/costs_bar_plot.png"/>
 
 ## Best Solutions Plots
 
 See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/main/own-method/plots/)
 
-<img src="plots/TSPA.png"/>
+<img src="plots/Own_method_SA_HEA.png"/>
 
 <div style="page-break-after: always"></div>
 
-<img src="plots/TSPB.png"/>
-
-<div style="page-break-after: always"></div>
-
-<img src="plots/TSPC.png"/>
-
-<div style="page-break-after: always"></div>
-
-<img src="plots/TSPD.png"/>
+<img src="plots/Own_method_Ant.png"/>
 
 <div style="page-break-after: always"></div>
 
