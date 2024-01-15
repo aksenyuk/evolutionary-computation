@@ -164,6 +164,10 @@ Link: [Source Code ACO](https://github.com/aksenyuk/evolutionary-computation/blo
 
 <div style="page-break-after: always"></div>
 
+### Table of Iterations
+
+<img src="plots/own_no_iters.png"/>
+
 ## Best Solutions Plots
 
 See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/main/own-method/plots/)
@@ -217,8 +221,6 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 <div style="page-break-after: always"></div>
 
-### Number of iterations
 
-<img src="plots/own_no_iters.png"/>
 
 

@@ -152,15 +152,15 @@ def main():
 
     instance = args.instance
 
-    # end_times = {"TSPA": 1264, "TSPB": 1310, "TSPC": 1267, "TSPD": 1269}
-    end_times = {"TSPA": 1800, "TSPB": 1800, "TSPC": 1800, "TSPD": 1800}
+    end_times = {"TSPA": 1264, "TSPB": 1310, "TSPC": 1267, "TSPD": 1269}
+    # end_times = {"TSPA": 1800, "TSPB": 1800, "TSPC": 1800, "TSPD": 1800}
 
     times = []
     costs = []
     # counters = []
     solutions = []
 
-    for _ in range(20):
+    for _ in range(7):
         start = time.perf_counter()
 
         df = pd.read_csv(f"./data/{instance}.csv", sep=";", names=["x", "y", "cost"])

@@ -160,7 +160,7 @@ def main():
     # counters = []
     solutions = []
 
-    for _ in range(20):
+    for _ in range(7):
         start = time.perf_counter()
 
         df = pd.read_csv(f"./data/{instance}.csv", sep=";", names=["x", "y", "cost"])
