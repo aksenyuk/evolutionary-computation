@@ -213,7 +213,8 @@ See plots: [Plots](https://github.com/aksenyuk/evolutionary-computation/tree/mai
 
 # Conclusions
 
-
+- Own_method_SA_HEA performs relatively same as HEA_Oper_1 and ILS, despite much less number of iterations.
+- Ant colony doesn't performs as good as expected, beign the worst algo among last ones.
 
 <div style="page-break-after: always"></div>
 
